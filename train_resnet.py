@@ -14,6 +14,8 @@ from verify_dataset import verify_dataset_structure
 from datetime import datetime
 import torch.cuda.amp as amp
 from torch.nn.parallel import DataParallel
+# Replace torchsummary import with torchinfo
+from torchinfo import summary
 
 class Logger:
     def __init__(self, log_file):
@@ -195,6 +197,14 @@ class Trainer:
                 print(f"Previous best accuracy: {self.best_acc*100:.2f}%")
             else:
                 print(f"No checkpoint found at '{config['resume']}'")
+        
+        # Print model summary after initialization
+        print("\nModel Summary:")
+        summary(self.model, 
+                input_size=(config['batch_size'], 3, 224, 224),
+                device=self.device,
+                col_names=["input_size", "output_size", "num_params", "kernel_size", "mult_adds"])
+        print("\n")
     
     def train_one_epoch(self, epoch):
         self.model.train()

@@ -1,0 +1,129 @@
+Mixed precision training loaded from checkpoint 15 of non mixed precision training
+----------------------------------------------------------------------------------------------------
+
+Dataset statistics:
+Total classes: 1000
+
+Training set:
+Total images: 1281167
+Average images per class: 1281.2
+Min images in a class: 732
+Max images in a class: 1300
+
+Validation set:
+Total images: 50000
+Average images per class: 50.0
+Min images in a class: 50
+Max images in a class: 50
+
+✓ Dataset structure verification completed successfully!
+Number of training samples: 1281167
+Number of validation samples: 50000
+
+Number of training samples: 1281167
+Number of validation samples: 50000
+Using mixed precision training
+Loading checkpoint 'checkpoints/checkpoint_epoch_15.pth'
+Loaded checkpoint 'checkpoints/checkpoint_epoch_15.pth' (epoch 15)
+Previous best accuracy: 49.39%
+Training on cuda
+Number of classes: 1000
+Logging to: outputs/training_log_20241230_033323.txt
+
+Epoch 16/100:
+Train Loss: 1.7527 Acc: 59.70%
+Val Loss: 1.3756 Acc: 66.05%
+New best accuracy: 66.05%
+
+Epoch 17/100:
+Train Loss: 1.6189 Acc: 62.35%
+Val Loss: 1.3426 Acc: 66.85%
+New best accuracy: 66.85%
+
+Epoch 18/100:
+Train Loss: 1.5587 Acc: 63.57%
+Val Loss: 1.3377 Acc: 66.94%
+New best accuracy: 66.94%
+
+Epoch 19/100:
+Train Loss: 1.5162 Acc: 64.45%
+Val Loss: 1.3070 Acc: 67.59%
+New best accuracy: 67.59%
+
+Epoch 20/100:
+Train Loss: 1.4771 Acc: 65.21%
+Val Loss: 1.2863 Acc: 67.96%
+New best accuracy: 67.96%
+Saved checkpoint to: checkpoints/checkpoint_epoch_20.pth
+~                                                                                                                                                                                                           
+
+Multiple GPUS Training :
+----------------------------------------------------------------------------------------------------
+Loaded checkpoint 'cp_stored/checkpoints_no_mp_no_gpu/checkpoint_epoch_20.pth' (epoch 20)
+Previous best accuracy: 58.68%
+Training on cuda
+Number of classes: 1000
+Logging to: outputs/training_log_20241230_060457.txt
+Epoch 21/100:   0%|                                                                                                                                                                | 0/1252 [00:00<?, ?it/s]
+/home/ubuntu/train_resnet_checkpount_mp_mgpu_new.py:213: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with self.autocast():
+Epoch 21/100: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1252/1252 [23:30<00:00,  1.13s/it, loss=1.5991, acc=62.83%]
+Validating:   0%|                                                                                                                                                                    | 0/49 [00:00<?, ?it/s]
+/home/ubuntu/train_resnet_checkpount_mp_mgpu_new.py:245: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.no_grad(), self.autocast():
+Validating: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 49/49 [01:01<00:00,  1.26s/it, loss=1.2687, acc=68.58%]
+
+Epoch 21/100:
+Train Loss: 1.5991 Acc: 62.83%
+Val Loss: 1.2687 Acc: 68.58%
+New best accuracy: 68.58%
+Saved checkpoint to: checkpoints/checkpoint_epoch_021.pth
+Saved best model to: checkpoints/model_best.pth
+Epoch 22/100: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1252/1252 [23:10<00:00,  1.11s/it, loss=1.4956, acc=64.96%]
+Validating: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 49/49 [00:33<00:00,  1.46it/s, loss=1.2262, acc=69.56%]
+
+Epoch 22/100:
+Train Loss: 1.4956 Acc: 64.96%
+Val Loss: 1.2262 Acc: 69.56%
+New best accuracy: 69.56%
+Saved checkpoint to: checkpoints/checkpoint_epoch_022.pth
+Saved best model to: checkpoints/model_best.pth
+Epoch 23/100: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1252/1252 [23:12<00:00,  1.11s/it, loss=1.4499, acc=65.91%]
+Validating: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 49/49 [00:59<00:00,  1.22s/it, loss=1.2018, acc=70.04%]
+
+Epoch 23/100:
+Train Loss: 1.4499 Acc: 65.91%
+Val Loss: 1.2018 Acc: 70.04%
+New best accuracy: 70.04%
+Saved checkpoint to: checkpoints/checkpoint_epoch_023.pth
+Saved best model to: checkpoints/model_best.pth
+Epoch 24/100: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1252/1252 [23:11<00:00,  1.11s/it, loss=1.4135, acc=66.72%]
+Validating: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 49/49 [00:57<00:00,  1.17s/it, loss=1.1753, acc=70.64%]
+
+Epoch 24/100:
+Train Loss: 1.4135 Acc: 66.72%
+Val Loss: 1.1753 Acc: 70.64%
+New best accuracy: 70.64%
+Saved checkpoint to: checkpoints/checkpoint_epoch_024.pth
+Saved best model to: checkpoints/model_best.pth
+Epoch 25/100: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1252/1252 [23:12<00:00,  1.11s/it, loss=1.3871, acc=67.28%]
+Validating: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 49/49 [00:33<00:00,  1.47it/s, loss=1.1656, acc=70.82%]
+
+Epoch 25/100:
+Train Loss: 1.3871 Acc: 67.28%
+Val Loss: 1.1656 Acc: 70.82%
+New best accuracy: 70.82%
+Saved checkpoint to: checkpoints/checkpoint_epoch_025.pth
+Saved best model to: checkpoints/model_best.pth
+Epoch 26/100:  78%|█████████████████████████████████████████████████████████████████████████████████████████████████▉                           | 981/1252 [18:13<04:58,  1.10s/it, loss=1.3673, acc=67.72%]
+Epoch 26/100: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1252/1252 [23:11<00:00,  1.11s/it, loss=1.3670, acc=67.72%]
+Validating: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 49/49 [00:57<00:00,  1.17s/it, loss=1.1434, acc=71.33%]
+
+Epoch 26/100:
+Train Loss: 1.3670 Acc: 67.72%
+Val Loss: 1.1434 Acc: 71.33%
+New best accuracy: 71.33%
+Saved checkpoint to: checkpoints/checkpoint_epoch_026.pth
+Saved best model to: checkpoints/model_best.pth
+
+----------------------------------------------------------------------------------------------------
