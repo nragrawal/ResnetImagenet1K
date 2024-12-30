@@ -1,12 +1,23 @@
-# ResNet Image Classifier
+# ResNet-50 ImageNet Classifier
 
-This is a demo of ResNet trained on ImageNet for image classification.
+This model is a ResNet-50 trained on ImageNet dataset.
 
-## Usage
-1. Upload an image
-2. Get top-5 predictions
+## Model description
 
-## Model Details
-- Architecture: ResNet-50
-- Dataset: ImageNet
-- Training Details: [Add your training details] 
+- **Model type:** ResNet-50
+- **Training Data:** ImageNet
+- **Framework:** PyTorch
+- **License:** MIT
+
+## Training procedure
+
+- **Training type:** Image Classification
+- **Optimizer:** SGD
+- **Learning rate:** 0.1
+- **Batch size:** 256
+- **Number of epochs:** 90
+
+## Metrics
+
+- Top-1 Accuracy: XX%
+- Top-5 Accuracy: XX% 
