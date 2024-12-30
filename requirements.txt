@@ -1,4 +1,6 @@
 torch
 torchvision
 gradio
-Pillow 
+Pillow
+torchsummary
+torchinform
