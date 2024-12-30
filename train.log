@@ -1,4 +1,119 @@
-Mixed precision training loaded from checkpoint 15 of non mixed precision training
+----------------------------------------------------------------------------------------------------
+Training of g4dn.2xlarge instance with 1 GPU and no mixed precision training
+Epoch Time : 3 hrs.
+Instance : g4dn.2xlarge. 1 NVIDIA T4 GPU with 16GB memory
+----------------------------------------------------------------------------------------------------
+
+Number of training samples: 128079
+Number of validation samples: 5000
+Training on cuda
+Number of classes: 100
+Logging to: outputs/training_log_20241227_034354.txt
+
+Epoch 1/30:
+Train Loss: 4.6086 Acc: 2.02%
+Val Loss: 4.2807 Acc: 4.32%
+New best accuracy: 4.32%
+
+Epoch 2/30:
+Train Loss: 4.1532 Acc: 6.16%
+Val Loss: 3.8793 Acc: 10.58%
+New best accuracy: 10.58%
+
+Epoch 3/30:
+Train Loss: 3.7536 Acc: 12.39%
+Val Loss: 3.5632 Acc: 17.76%
+New best accuracy: 17.76%
+
+Epoch 4/30:
+Train Loss: 3.3157 Acc: 20.29%
+Val Loss: 3.0855 Acc: 26.74%
+New best accuracy: 26.74%
+
+Epoch 5/30:
+Train Loss: 3.0103 Acc: 26.26%
+Val Loss: 2.8530 Acc: 29.82%
+New best accuracy: 29.82%
+Saved checkpoint to: checkpoints/checkpoint_epoch_5.pth
+
+Epoch 6/30:
+Train Loss: 2.7626 Acc: 31.58%
+Val Loss: 2.4506 Acc: 38.52%
+New best accuracy: 38.52%
+
+Epoch 7/30:
+Train Loss: 2.5654 Acc: 36.08%
+Val Loss: 2.2507 Acc: 43.28%
+New best accuracy: 43.28%
+
+Epoch 8/30:
+Train Loss: 2.3805 Acc: 40.33%
+Val Loss: 2.1314 Acc: 46.20%
+New best accuracy: 46.20%
+
+Epoch 9/30:
+Train Loss: 2.2383 Acc: 43.42%
+Val Loss: 4.3310 Acc: 46.64%
+New best accuracy: 46.64%
+
+Epoch 10/30:
+Train Loss: 2.5930 Acc: 43.33%
+Val Loss: 2.4257 Acc: 44.81%
+Saved checkpoint to: checkpoints/checkpoint_epoch_10.pth
+
+Epoch 11/30:
+Train Loss: 2.5446 Acc: 44.13%
+Val Loss: 2.4153 Acc: 45.30%
+
+Epoch 12/30:
+Train Loss: 2.4952 Acc: 45.03%
+Val Loss: 2.2019 Acc: 49.05%
+New best accuracy: 49.05%
+
+Epoch 13/30:
+Train Loss: 2.4447 Acc: 45.93%
+Val Loss: 2.3277 Acc: 46.83%
+
+Epoch 14/30:
+Train Loss: 2.3937 Acc: 46.89%
+Val Loss: 2.1633 Acc: 49.39%
+New best accuracy: 49.39%
+
+Epoch 15/30:
+Train Loss: 2.3418 Acc: 47.91%
+Val Loss: 2.2056 Acc: 49.02%
+Saved checkpoint to: checkpoints/checkpoint_epoch_15.pth
+
+Epoch 16/30:
+Train Loss: 2.2861 Acc: 48.97%
+Val Loss: 2.0176 Acc: 52.73%
+New best accuracy: 52.73%
+
+Epoch 17/30:
+Train Loss: 2.2263 Acc: 50.11%
+Val Loss: 1.9583 Acc: 53.77%
+New best accuracy: 53.77%
+
+Epoch 18/30:
+Train Loss: 2.1631 Acc: 51.27%
+Val Loss: 1.8738 Acc: 55.67%
+New best accuracy: 55.67%
+
+Epoch 19/30:
+Train Loss: 2.1001 Acc: 52.51%
+Val Loss: 1.8668 Acc: 55.86%
+New best accuracy: 55.86%
+
+Epoch 20/30:
+Train Loss: 2.0316 Acc: 53.88%
+Val Loss: 1.7205 Acc: 58.68%
+New best accuracy: 58.68%
+Saved checkpoint to: checkpoints/checkpoint_epoch_20.pth
+
+----------------------------------------------------------------------------------------------------
+Switched to Mixed precision training loaded from checkpoint 15 of non mixed precision training.
+Epoch Time : 45 minutes
+Instance : g6e.xlarge ( 45GB GPU memory)
 ----------------------------------------------------------------------------------------------------
 
 Dataset statistics:
@@ -57,7 +172,10 @@ New best accuracy: 67.96%
 Saved checkpoint to: checkpoints/checkpoint_epoch_20.pth
 ~                                                                                                                                                                                                           
 
-Multiple GPUS Training :
+----------------------------------------------------------------------------------------------------
+Switched to Multiple GPUS Training loaded from checkpoint 20 of *non* mixed precision training:
+Epoch Time : 24 minutes
+Instance : g4dn.12xlarge 4 NVIDIA T4 GPUs with 16GB memory each
 ----------------------------------------------------------------------------------------------------
 Loaded checkpoint 'cp_stored/checkpoints_no_mp_no_gpu/checkpoint_epoch_20.pth' (epoch 20)
 Previous best accuracy: 58.68%
@@ -125,5 +243,58 @@ Val Loss: 1.1434 Acc: 71.33%
 New best accuracy: 71.33%
 Saved checkpoint to: checkpoints/checkpoint_epoch_026.pth
 Saved best model to: checkpoints/model_best.pth
+
+Epoch 28/100:
+Train Loss: 1.3207 Acc: 68.67%
+Val Loss: 1.1252 Acc: 71.72%
+New best accuracy: 71.72%
+Saved checkpoint to: checkpoints/checkpoint_epoch_028.pth
+Saved best model to: checkpoints/model_best.pth
+Epoch 29/100: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1252/1252 [45:38<00:00,  2.19s/it, loss=1.3089, acc=68.89%]
+Validating: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 49/49 [01:40<00:00,  2.06s/it, loss=1.1226, acc=71.84%]
+
+Epoch 29/100:
+Train Loss: 1.3089 Acc: 68.89%
+Val Loss: 1.1226 Acc: 71.84%
+New best accuracy: 71.84%
+Saved checkpoint to: checkpoints/checkpoint_epoch_029.pth
+Saved best model to: checkpoints/model_best.pth
+Epoch 30/100: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1252/1252 [45:59<00:00,  2.20s/it, loss=1.3069, acc=69.00%]
+Validating: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 49/49 [01:40<00:00,  2.06s/it, loss=1.1214, acc=71.82%]
+
+Epoch 30/100:
+Train Loss: 1.3069 Acc: 69.00%
+Val Loss: 1.1214 Acc: 71.82%
+Saved checkpoint to: checkpoints/checkpoint_epoch_030.pth
+Epoch 31/100: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1252/1252 [45:32<00:00,  2.18s/it, loss=1.3050, acc=68.99%]
+Validating: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 49/49 [01:40<00:00,  2.04s/it, loss=1.1210, acc=71.82%]
+
+Epoch 31/100:
+Train Loss: 1.3050 Acc: 68.99%
+Val Loss: 1.1210 Acc: 71.82%
+Saved checkpoint to: checkpoints/checkpoint_epoch_031.pth
+Epoch 32/100: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1252/1252 [45:31<00:00,  2.18s/it, loss=1.3047, acc=68.98%]
+Validating: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 49/49 [01:40<00:00,  2.06s/it, loss=1.1203, acc=71.82%]
+
+Epoch 32/100:
+Train Loss: 1.3047 Acc: 68.98%
+Val Loss: 1.1203 Acc: 71.82%
+Saved checkpoint to: checkpoints/checkpoint_epoch_032.pth
+Epoch 33/100: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1252/1252 [45:43<00:00,  2.19s/it, loss=1.3039, acc=69.00%]
+Validating: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 49/49 [01:40<00:00,  2.05s/it, loss=1.1208, acc=71.88%]
+
+Epoch 33/100:
+Train Loss: 1.3039 Acc: 69.00%
+Val Loss: 1.1208 Acc: 71.88%
+New best accuracy: 71.88%
+Saved checkpoint to: checkpoints/checkpoint_epoch_033.pth
+Saved best model to: checkpoints/model_best.pth
+Epoch 34/100: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1252/1252 [45:29<00:00,  2.18s/it, loss=1.3068, acc=68.96%]
+Validating: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 49/49 [01:40<00:00,  2.05s/it, loss=1.1190, acc=71.87%]
+
+Epoch 34/100:
+Train Loss: 1.3068 Acc: 68.96%
+Val Loss: 1.1190 Acc: 71.87%
+Saved checkpoint to: checkpoints/checkpoint_epoch_034.pth
 
 ----------------------------------------------------------------------------------------------------
