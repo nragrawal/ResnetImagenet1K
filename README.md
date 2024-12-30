@@ -6,14 +6,30 @@ This model is a ResNet-50 trained on ImageNet dataset.
 
 ### 1. Download ImageNet from Kaggle
 
-```bash
 Install kaggle CLI
+
+```bash
 pip install kaggle
+```
+
 Place kaggle.json in ~/.kaggle/
+
+```bash
 mkdir -p ~/.kaggle
 cp kaggle.json ~/.kaggle/
 chmod 600 ~/.kaggle/kaggle.json
+```
+
+Export variable KAGGLE_USERNAME and KAGGLE_KEY
+
+```bash
+export KAGGLE_USERNAME=nagrawal
+export KAGGLE_KEY=7cf0e384f7f32dbbd351065865d61f50
+```
+
 Download ImageNet
+
+```bash
 kaggle competitions download -c imagenet-object-localization-challenge
 unzip imagenet-object-localization-challenge.zip -d ILSVRC
 ```
