@@ -247,33 +247,46 @@ class Trainer:
     def validate(self):
         self.model.eval()
         running_loss = 0.0
-        running_corrects = 0
+        running_top1_corrects = 0
+        running_top5_corrects = 0
         processed_data = 0
         
         pbar = tqdm(self.val_loader, desc='Validating')
-        # Use autocast for validation too
         with torch.no_grad(), self.autocast():
             for inputs, labels in pbar:
                 inputs = inputs.to(self.device)
                 labels = labels.to(self.device)
                 
                 outputs = self.model(inputs)
-                _, preds = torch.max(outputs, 1)
                 loss = self.criterion(outputs, labels)
                 
+                # Calculate top-1 and top-5 accuracy
+                _, pred = outputs.topk(5, 1, True, True)
+                labels = labels.view(-1, 1).expand_as(pred)  # Shape: batch_size x 5
+                correct = pred.eq(labels)
+                
+                # Top-1 accuracy
+                top1_correct = correct[:, 0]
+                running_top1_corrects += top1_correct.sum().item()
+                
+                # Top-5 accuracy
+                top5_correct = correct.any(dim=1)
+                running_top5_corrects += top5_correct.sum().item()
+                
                 running_loss += loss.item() * inputs.size(0)
-                running_corrects += torch.sum(preds == labels.data)
                 processed_data += inputs.size(0)
                 
                 pbar.set_postfix({
                     'loss': f'{running_loss/processed_data:.4f}',
-                    'acc': f'{(running_corrects.double()/processed_data)*100:.2f}%'
+                    'top1': f'{(running_top1_corrects/processed_data)*100:.2f}%',
+                    'top5': f'{(running_top5_corrects/processed_data)*100:.2f}%'
                 })
         
         epoch_loss = running_loss / processed_data
-        epoch_acc = running_corrects.double() / processed_data
+        top1_acc = running_top1_corrects / processed_data
+        top5_acc = running_top5_corrects / processed_data
         
-        return epoch_loss, epoch_acc
+        return epoch_loss, top1_acc, top5_acc
     
     def train(self):
         print(f"Training on {self.device}")
@@ -288,7 +301,7 @@ class Trainer:
             train_loss, train_acc = self.train_one_epoch(epoch)
             
             # Validation phase
-            val_loss, val_acc = self.validate()
+            val_loss, val_top1_acc, val_top5_acc = self.validate()
             
             # Step the scheduler
             self.scheduler.step()
@@ -296,14 +309,14 @@ class Trainer:
             # Print and log epoch summary
             summary = f"\nEpoch {epoch}/{self.config['epochs']}:\n"
             summary += f"Train Loss: {train_loss:.4f} Acc: {train_acc*100:.2f}%\n"
-            summary += f"Val Loss: {val_loss:.4f} Acc: {val_acc*100:.2f}%"
+            summary += f"Val Loss: {val_loss:.4f} Top-1: {val_top1_acc*100:.2f}% Top-5: {val_top5_acc*100:.2f}%"
             print(summary)
             
-            # Save best model and checkpoint
-            is_best = val_acc > self.best_acc
+            # Save best model based on top-1 accuracy
+            is_best = val_top1_acc > self.best_acc
             if is_best:
-                self.best_acc = val_acc
-                print(f'New best accuracy: {self.best_acc*100:.2f}%')
+                self.best_acc = val_top1_acc
+                print(f'New best accuracy: Top-1 {self.best_acc*100:.2f}%')
             
             # Save checkpoint every epoch
             self.save_checkpoint(
@@ -311,7 +324,8 @@ class Trainer:
                 train_loss=train_loss,
                 train_acc=train_acc,
                 val_loss=val_loss,
-                val_acc=val_acc,
+                val_top1_acc=val_top1_acc,
+                val_top5_acc=val_top5_acc,
                 is_best=is_best
             )
         
@@ -324,7 +338,7 @@ class Trainer:
         self.model.load_state_dict(torch.load(os.path.join(self.config['checkpoint_dir'], 'model_best.pth'))['model_state_dict'])
         return self.model
 
-    def save_checkpoint(self, epoch, train_loss, train_acc, val_loss, val_acc, is_best=False):
+    def save_checkpoint(self, epoch, train_loss, train_acc, val_loss, val_top1_acc, val_top5_acc, is_best=False):
         checkpoint = {
             'epoch': epoch,
             'model_state_dict': self.model.state_dict(),
@@ -333,7 +347,8 @@ class Trainer:
             'train_loss': train_loss,
             'train_acc': train_acc,
             'val_loss': val_loss,
-            'val_acc': val_acc,
+            'val_top1_acc': val_top1_acc,
+            'val_top5_acc': val_top5_acc,
             'best_acc': self.best_acc,
         }
         
