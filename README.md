@@ -247,3 +247,31 @@ tail -f outputs/training_log_*.txt
 # Check GPU usage
 nvidia-smi -l 1
 ``` 
+
+**Process Followed:**
+
+1. Used cursor to create basic model and dataset.
+
+2. Downloaded dataset directly onto EC2 instance using Kaggle CLI.
+
+3. Converted the dataset to the format required by model.
+
+4. Converted dataset into 2 sets, 10% and 100%.
+
+5. Tested the model on 10% -> received 75%+ accuracy.
+
+6. Trainined on EC2 > g4d.2xlarge with batch size of 128 and received ~60% accuracy in 20 epochs but epoch time was 3hrs.
+
+7. So added mixed precision training using Cursor as suggested by some fellow batch-mates ( thanks ).
+
+Started from the checkpoint from previous step. Received best accuracy of 71.88% with per epoch time of 45 min on g6e.xlarge ( 45G ) with batch size of 1024.
+
+8. Added data parallel support to train on multiple GPUs using Cursor with effective batch size of 4096 but 1024 on each GPU. Trained on g4d.12large instance with 4 NVIDIA T4 GPUs.. Epoch time of 24min was achieve with ~71-72% accuracy.
+
+Again started from checkpoint from Step 6.
+
+9. Uploaded to hugging face spaces : https://huggingface.co/spaces/nragrawal/ImagenetResnetModel
+
+10. Tried with multiple images downloaded from internet and works as expected : 
+
+
