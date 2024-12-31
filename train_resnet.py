@@ -132,8 +132,7 @@ class Trainer:
         
         # Create model and move to device
         self.model = create_model(
-            num_classes=self.num_classes,
-            pretrained=config['pretrained']
+            num_classes=self.num_classes
         )
         
         # Check if multiple GPUs are available
@@ -378,8 +377,6 @@ if __name__ == '__main__':
                       help='Number of epochs to train')
     parser.add_argument('--lr', type=float, default=0.1,
                       help='Initial learning rate')
-    parser.add_argument('--pretrained', action='store_true',
-                      help='Use pretrained model')
     parser.add_argument('--resume', type=str, default=None,
                       help='Path to checkpoint to resume training from')
     
@@ -407,13 +404,12 @@ if __name__ == '__main__':
     
     config = {
         'data_dir': args.data_dir,
-        'batch_size': args.batch_size,  # Per-GPU batch size
-        'num_workers': 4 * num_gpus,    # Scale workers with GPUs
-        'learning_rate': args.lr * num_gpus,  # Scale learning rate with GPUs
+        'batch_size': args.batch_size,
+        'num_workers': 4 * num_gpus,
+        'learning_rate': args.lr * num_gpus,
         'momentum': 0.9,
         'weight_decay': 1e-4,
         'epochs': args.epochs,
-        'pretrained': args.pretrained,
         'checkpoint_dir': 'checkpoints',
         'resume': args.resume
     }
