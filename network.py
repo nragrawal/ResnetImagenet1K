@@ -1,26 +1,21 @@
 import torch
 import torch.nn as nn
-import torchvision.models as models
 
 class Bottleneck(nn.Module):
     expansion = 4
 
-    def __init__(self, in_channels, out_channels, stride=1, downsample=None):
+    def __init__(self, inplanes, planes, stride=1, downsample=None):
         super(Bottleneck, self).__init__()
-        
-        self.conv1 = nn.Conv2d(in_channels, out_channels, kernel_size=1, bias=False)
-        self.bn1 = nn.BatchNorm2d(out_channels)
-        
-        self.conv2 = nn.Conv2d(out_channels, out_channels, kernel_size=3, 
-                              stride=stride, padding=1, bias=False)
-        self.bn2 = nn.BatchNorm2d(out_channels)
-        
-        self.conv3 = nn.Conv2d(out_channels, out_channels * self.expansion, 
-                              kernel_size=1, bias=False)
-        self.bn3 = nn.BatchNorm2d(out_channels * self.expansion)
-        
+        self.conv1 = nn.Conv2d(inplanes, planes, kernel_size=1, bias=False)
+        self.bn1 = nn.BatchNorm2d(planes)
+        self.conv2 = nn.Conv2d(planes, planes, kernel_size=3, stride=stride,
+                              padding=1, bias=False)
+        self.bn2 = nn.BatchNorm2d(planes)
+        self.conv3 = nn.Conv2d(planes, planes * self.expansion, kernel_size=1, bias=False)
+        self.bn3 = nn.BatchNorm2d(planes * self.expansion)
         self.relu = nn.ReLU(inplace=True)
         self.downsample = downsample
+        self.stride = stride
 
     def forward(self, x):
         identity = x
@@ -44,46 +39,44 @@ class Bottleneck(nn.Module):
 
         return out
 
-class ResNet50(nn.Module):
-    def __init__(self, num_classes=1000):
-        super(ResNet50, self).__init__()
-        
-        self.in_channels = 64
-        
+class ResNet(nn.Module):
+    def __init__(self, block, layers, num_classes=1000):
+        super(ResNet, self).__init__()
+        self.inplanes = 64
+
         # Initial layers
-        self.conv1 = nn.Conv2d(3, 64, kernel_size=7, stride=2, padding=3, bias=False)
-        self.bn1 = nn.BatchNorm2d(64)
+        self.conv1 = nn.Conv2d(3, self.inplanes, kernel_size=7, stride=2, padding=3, bias=False)
+        self.bn1 = nn.BatchNorm2d(self.inplanes)
         self.relu = nn.ReLU(inplace=True)
         self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
-        
+
         # Residual layers
-        self.layer1 = self._make_layer(64, 3)
-        self.layer2 = self._make_layer(128, 4, stride=2)
-        self.layer3 = self._make_layer(256, 6, stride=2)
-        self.layer4 = self._make_layer(512, 3, stride=2)
-        
+        self.layer1 = self._make_layer(block, 64, layers[0])
+        self.layer2 = self._make_layer(block, 128, layers[1], stride=2)
+        self.layer3 = self._make_layer(block, 256, layers[2], stride=2)
+        self.layer4 = self._make_layer(block, 512, layers[3], stride=2)
+
         # Classification head
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
-        self.fc = nn.Linear(512 * Bottleneck.expansion, num_classes)
-        
-        # Weight initialization
+        self.fc = nn.Linear(512 * block.expansion, num_classes)
+
+        # Initialize weights
         self._initialize_weights()
 
-    def _make_layer(self, out_channels, blocks, stride=1):
+    def _make_layer(self, block, planes, blocks, stride=1):
         downsample = None
-        if stride != 1 or self.in_channels != out_channels * Bottleneck.expansion:
+        if stride != 1 or self.inplanes != planes * block.expansion:
             downsample = nn.Sequential(
-                nn.Conv2d(self.in_channels, out_channels * Bottleneck.expansion,
+                nn.Conv2d(self.inplanes, planes * block.expansion,
                          kernel_size=1, stride=stride, bias=False),
-                nn.BatchNorm2d(out_channels * Bottleneck.expansion),
+                nn.BatchNorm2d(planes * block.expansion),
             )
 
         layers = []
-        layers.append(Bottleneck(self.in_channels, out_channels, stride, downsample))
-        
-        self.in_channels = out_channels * Bottleneck.expansion
+        layers.append(block(self.inplanes, planes, stride, downsample))
+        self.inplanes = planes * block.expansion
         for _ in range(1, blocks):
-            layers.append(Bottleneck(self.in_channels, out_channels))
+            layers.append(block(self.inplanes, planes))
 
         return nn.Sequential(*layers)
 
@@ -112,18 +105,6 @@ class ResNet50(nn.Module):
 
         return x
 
-def create_model(num_classes, pretrained=False):
-    """
-    Create a ResNet-50 model
-    Args:
-        num_classes: Number of output classes
-        pretrained: Whether to use pretrained weights from ImageNet
-    """
-    # Load model with or without pretrained weights
-    model = models.resnet50(pretrained=pretrained)
-    
-    # Modify the final layer for our number of classes
-    num_ftrs = model.fc.in_features
-    model.fc = nn.Linear(num_ftrs, num_classes)
-    
-    return model 
+def create_model(num_classes=1000, **kwargs):
+    """Create a ResNet-50 model"""
+    return ResNet(Bottleneck, [3, 4, 6, 3], num_classes=num_classes) 
